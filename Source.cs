@@ -541,7 +541,7 @@ namespace OnceMore
         {
             CurrentLvl = Convert.ToInt32(pkLVL6.Text);
             SelectedPokemon = 6;
-            PictureOne.BorderStyle = BorderStyle.FixedSingle;
+            PictureOne.BorderStyle = BorderStyle.None;
             PictureTwo.BorderStyle = BorderStyle.None;
             PictureThree.BorderStyle = BorderStyle.None;
             PictureFour.BorderStyle = BorderStyle.None;
