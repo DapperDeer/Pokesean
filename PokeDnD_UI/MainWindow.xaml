@@ -12,6 +12,9 @@
 		<Button Content="Load Trainer Card" x:Name="btnLoadTrainerCard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Margin="10,61,0,0" Click="btnLoadTrainerCard_Click"/>
 		<Button Content="Update Trainer Card" x:Name="btnUpdateTrainerCard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Margin="10,86,0,0" Click="btnUpdateTrainerCard_Click"/>
 		<TextBox HorizontalAlignment="Left" Height="23" Margin="10,8,0,0" TextWrapping="Wrap" Text="Trainer Name" x:Name="txtTrainerName" VerticalAlignment="Top" Width="143"/>
-		<TextBlock HorizontalAlignment="Left" x:Name="txtTrainerDetails" Margin="285,48,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" AutomationProperties.LabeledBy="{Binding Content, ElementName=btnLoadTrainerCard}"/>
+		<GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="274" Margin="10,121,0,0" VerticalAlignment="Top" Width="240" ScrollViewer.CanContentScroll="True">
+			<TextBox HorizontalAlignment="Left" x:Name="txtTrainerDetails" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="TextBlock" VerticalAlignment="Top" AutomationProperties.LabeledBy="{Binding Content, ElementName=btnLoadTrainerCard}" ScrollViewer.CanContentScroll="True" Height="232" Width="208" MaxWidth="250" MaxHeight="232" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+		</GroupBox>
+		<ComboBox x:Name="drpdwnAddPokemon" HorizontalAlignment="Left" Margin="260,36,0,0" VerticalAlignment="Top" Width="120"/>
 	</Grid>
 </Window>

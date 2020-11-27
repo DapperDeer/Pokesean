@@ -24,12 +24,13 @@ namespace PokeDnD_UI
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private PokeClient _client;
+		private App _app;
 		private OpenFileDialog _open;
+
 		public MainWindow()
 		{
 			InitializeComponent();
-			this._client = new PokeClient();
+			_app = new App();
 			this._open = new OpenFileDialog();
 			this._open.FileOk += (sender, e) => Trainer.LoadTrainerCard(sender, e, txtTrainerDetails);
 		}

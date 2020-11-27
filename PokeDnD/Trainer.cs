@@ -23,7 +23,7 @@ namespace PokeDnD
 			this.Party = new List<Pokemon>(6);
 		}
 
-		public static void LoadTrainerCard(object sender, EventArgs args, TextBlock content)
+		public static void LoadTrainerCard(object sender, EventArgs args, TextBox content)
 		{
 			var file = sender as OpenFileDialog;
 			string json = File.ReadAllText(file.FileName);
@@ -46,6 +46,13 @@ namespace PokeDnD
 			for (int i = 0; i < this.Party.Count; i++)
 			{
 				sb.AppendLine($"{i + 1}. {this.Party[i]}");
+			}
+			sb.AppendLine();
+			sb.AppendLine();
+			sb.AppendLine($"Pokemon in Storage: ");
+			foreach (var pokemon in this.PokemonBank)
+			{
+				sb.AppendLine(pokemon.ToShortString());
 			}
 			return sb.ToString();
 		}

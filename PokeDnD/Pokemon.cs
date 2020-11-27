@@ -25,12 +25,19 @@ namespace PokeDnD
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			sb.AppendLine($"{this.Name} - {this.Type.ToString()}");
+			sb.AppendLine($"{this.Name} - {this.Type}");
 			sb.AppendLine($"Stats:");
 			foreach (var stat in this.Stats)
 			{
-				sb.AppendLine($"{stat.ToString()}");
+				sb.AppendLine($"{stat}");
 			}
+			return sb.ToString();
+		}
+
+		public string ToShortString()
+		{
+			var sb = new StringBuilder();
+			sb.AppendLine($"{this.Name} - {this.Type}");
 			return sb.ToString();
 		}
 	}
