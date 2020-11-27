@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeDnD", "PokeDnD\PokeDnD.csproj", "{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeDnD_UI", "PokeDnD_UI\PokeDnD_UI.csproj", "{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnceMore", "OnceMore\OnceMore\OnceMore.csproj", "{D6D7E182-B6FE-4A7F-954F-07227966D3D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6D7E182-B6FE-4A7F-954F-07227966D3D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6D7E182-B6FE-4A7F-954F-07227966D3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6D7E182-B6FE-4A7F-954F-07227966D3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6D7E182-B6FE-4A7F-954F-07227966D3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0084949D-78FB-4EB7-8903-2D0E4AD380EF}
+	EndGlobalSection
+EndGlobal
