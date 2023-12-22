@@ -5,7 +5,16 @@ using System.ComponentModel;
 
 namespace WpfLibrary1
 {
-	public class PokemonCoordinator : INotifyPropertyChanged
+	public interface IPokemonCoordinator
+	{
+		event PropertyChangedEventHandler? PropertyChanged;
+
+		Task Initialize();
+
+		ObservableCollection<Pokemon> Pokemon { get; }
+	}
+
+	public class PokemonCoordinator : IPokemonCoordinator, INotifyPropertyChanged
 	{
 		private readonly IPokeClient _pokeClient;
 		private readonly IDesignTimeDbContextFactory<PokemonDBContext> _dbContextFactory;
@@ -30,7 +39,9 @@ namespace WpfLibrary1
 			{
 				if (!pokemonDBContext.Database.EnsureCreated())
 				{
-					Pokemon = new ObservableCollection<Pokemon>(pokemonDBContext.Pokemon.Include(pkmn => pkmn.Type));
+					Pokemon = new ObservableCollection<Pokemon>(pokemonDBContext.Pokemon
+																.Include(pkmn => pkmn.Type)
+																.Include(pkmn => pkmn.Stats));
 					return;
 				}
 
@@ -38,6 +49,7 @@ namespace WpfLibrary1
 				await pokemonDBContext.AddRangeAsync(Pokemon!);
 				await pokemonDBContext.SaveChangesAsync();
 			}
+
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());

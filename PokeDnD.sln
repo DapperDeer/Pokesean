@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeDnD", "PokeDnD\PokeDnD.csproj", "{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfLibrary1", "WpfLibrary1\WpfLibrary1.csproj", "{C55EBCC5-741D-4640-8485-52F2D38C6FEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeDnD_UI", "PokeDnD_UI\PokeDnD_UI.csproj", "{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{09A2E587-89DA-41D3-AE03-00D5FAC54814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLibrary1", "WpfLibrary1\WpfLibrary1.csproj", "{C55EBCC5-741D-4640-8485-52F2D38C6FEF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{09A2E587-89DA-41D3-AE03-00D5FAC54814}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLibrary1Tests", "WpfLibrary1Tests\WpfLibrary1Tests.csproj", "{01CE0215-4411-4D4C-B207-03BCEAC93FD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E473B88-B8EE-4E25-8807-E18BB3E4E32A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A7C6D4F-70EE-4F66-B931-A8F8F3A947A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C55EBCC5-741D-4640-8485-52F2D38C6FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C55EBCC5-741D-4640-8485-52F2D38C6FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C55EBCC5-741D-4640-8485-52F2D38C6FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +23,10 @@ Global
 		{09A2E587-89DA-41D3-AE03-00D5FAC54814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09A2E587-89DA-41D3-AE03-00D5FAC54814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09A2E587-89DA-41D3-AE03-00D5FAC54814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01CE0215-4411-4D4C-B207-03BCEAC93FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01CE0215-4411-4D4C-B207-03BCEAC93FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01CE0215-4411-4D4C-B207-03BCEAC93FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01CE0215-4411-4D4C-B207-03BCEAC93FD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

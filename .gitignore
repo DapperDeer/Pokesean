@@ -1,0 +1,13 @@
+obj*
+bin*
+obj\*
+bin\*
+*\obj\*
+*\bin\*
+WpfApp1\obj\*
+WpfApp1\bin\*
+*.dll
+*.pdb
+*.cache
+*.db
+*.db*

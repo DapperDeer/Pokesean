@@ -9,7 +9,7 @@ namespace WpfLibrary1
 		public PokemonDBContext CreateDbContext(string[] args)
 		{
 			var optionsBuilder = new DbContextOptionsBuilder();
-			optionsBuilder.UseSqlite(@"Data Source=D:\Visual Studio\Projects\Pokesean-master\WpfApp1\pokemon5.db");
+			optionsBuilder.UseSqlite(@"Data Source=D:\Visual Studio\Projects\Pokesean-master\WpfApp1\pokemon0.db");
 
 			return new PokemonDBContext(optionsBuilder.Options);
 		}

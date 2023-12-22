@@ -14,17 +14,14 @@ namespace WpfLibrary1
 		{
 		}
 
-		public Pokemon(string name, int dexNumber, IEnumerable<PokeApiNet.PokemonType> types, IEnumerable<PokemonStat> stats)
+		public Pokemon(string name, int dexNumber, IEnumerable<PokemonType> types, IEnumerable<PokemonStat> stats)
 		{
 			var nameArray = name.ToCharArray();
 			nameArray[0] = char.ToUpper(nameArray[0]);
 			Name = string.Concat(nameArray);
 			PokedexNumber = dexNumber;
 			Type = PokeTypeUtilities.PokeTypeConverter(types);
-			foreach (var stat in stats)
-			{
-				Stats.Add(new(stat.Stat.Name, stat.BaseStat));
-			}
+			Stats = StatsConverter.ConvertToStats(stats);
 		}
 
 		[JsonPropertyName("Name")]
@@ -38,8 +35,9 @@ namespace WpfLibrary1
 		[JsonPropertyName("Type")]
 		public PokeType Type { get; set; }
 
+		[ForeignKey(nameof(Stats.Id))]
 		[JsonPropertyName("Stats")]
-		public List<Stat> Stats { get; } = new();
+		public Stats Stats { get; set; }
 
 		public override string ToString()
 		{
@@ -51,10 +49,12 @@ namespace WpfLibrary1
 			}
 			sb.AppendLine();
 			sb.AppendLine($"Stats:");
-			foreach (var stat in this.Stats)
-			{
-				sb.AppendLine($"{stat}");
-			}
+			sb.AppendLine(Stats.HP.ToString());
+			sb.AppendLine(Stats.Attack.ToString());
+			sb.AppendLine(Stats.Defense.ToString());
+			sb.AppendLine(Stats.SpecialAttack.ToString());
+			sb.AppendLine(Stats.SpecialDefense.ToString());
+			sb.AppendLine(Stats.Speed.ToString());
 			return sb.ToString();
 		}
 
