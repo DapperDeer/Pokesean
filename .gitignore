@@ -11,3 +11,4 @@ WpfApp1\bin\*
 *.cache
 *.db
 *.db*
+*.vs*

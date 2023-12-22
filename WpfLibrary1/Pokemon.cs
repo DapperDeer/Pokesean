@@ -21,7 +21,12 @@ namespace WpfLibrary1
 			Name = string.Concat(nameArray);
 			PokedexNumber = dexNumber;
 			Type = PokeTypeUtilities.PokeTypeConverter(types);
-			Stats = StatsConverter.ConvertToStats(stats);
+			var pkmnStats = new Dictionary<string, Stat>();
+			foreach (var stat in stats)
+			{
+				var pokemonStat = StatsConverter.Convert(stat, out string statName);
+				
+			}
 		}
 
 		[JsonPropertyName("Name")]
@@ -35,9 +40,12 @@ namespace WpfLibrary1
 		[JsonPropertyName("Type")]
 		public PokeType Type { get; set; }
 
-		[ForeignKey(nameof(Stats.Id))]
-		[JsonPropertyName("Stats")]
-		public Stats Stats { get; set; }
+		public Stat HP { get; set; } = new(nameof(HP), 0);
+		public Stat Attack { get; set; } = new(nameof(Attack), 0);
+		public Stat Defense { get; set; } = new(nameof(Defense), 0);
+		public Stat SpecialAttack { get; set; } = new(nameof(SpecialAttack), 0);
+		public Stat SpecialDefense { get; set; } = new(nameof(SpecialDefense), 0);
+		public Stat Speed { get; set; } = new(nameof(Speed), 0);
 
 		public override string ToString()
 		{
@@ -48,13 +56,12 @@ namespace WpfLibrary1
 				sb.Append($" - {Type.SlotTwo}");
 			}
 			sb.AppendLine();
-			sb.AppendLine($"Stats:");
-			sb.AppendLine(Stats.HP.ToString());
-			sb.AppendLine(Stats.Attack.ToString());
-			sb.AppendLine(Stats.Defense.ToString());
-			sb.AppendLine(Stats.SpecialAttack.ToString());
-			sb.AppendLine(Stats.SpecialDefense.ToString());
-			sb.AppendLine(Stats.Speed.ToString());
+			sb.AppendLine(HP.ToString());
+			sb.AppendLine(Attack.ToString());
+			sb.AppendLine(Defense.ToString());
+			sb.AppendLine(SpecialAttack.ToString());
+			sb.AppendLine(SpecialDefense.ToString());
+			sb.AppendLine(Speed.ToString());
 			return sb.ToString();
 		}
 
