@@ -39,9 +39,7 @@ namespace WpfLibrary1
 			{
 				if (!pokemonDBContext.Database.EnsureCreated())
 				{
-					Pokemon = new ObservableCollection<Pokemon>(pokemonDBContext.Pokemon
-																.Include(pkmn => pkmn.Type)
-																.Include(pkmn => pkmn.Stats));
+					Pokemon = new ObservableCollection<Pokemon>(pokemonDBContext.Pokemon.Include(pkmn => pkmn.Type));
 					return;
 				}
 

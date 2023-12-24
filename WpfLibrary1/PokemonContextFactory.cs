@@ -5,11 +5,10 @@ namespace WpfLibrary1
 {
 	public class PokemonContextFactory : IDesignTimeDbContextFactory<PokemonDBContext>
 	{
-
 		public PokemonDBContext CreateDbContext(string[] args)
 		{
 			var optionsBuilder = new DbContextOptionsBuilder();
-			optionsBuilder.UseSqlite(@"Data Source=D:\Visual Studio\Projects\Pokesean-master\WpfApp1\pokemon0.db");
+			optionsBuilder.UseSqlite(@$"Data Source={Environment.CurrentDirectory}\pokemon12.db");
 
 			return new PokemonDBContext(optionsBuilder.Options);
 		}

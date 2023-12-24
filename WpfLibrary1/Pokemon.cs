@@ -2,7 +2,6 @@ using PokeApiNet;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace WpfLibrary1
@@ -21,11 +20,29 @@ namespace WpfLibrary1
 			Name = string.Concat(nameArray);
 			PokedexNumber = dexNumber;
 			Type = PokeTypeUtilities.PokeTypeConverter(types);
-			var pkmnStats = new Dictionary<string, Stat>();
 			foreach (var stat in stats)
 			{
-				var pokemonStat = StatsConverter.Convert(stat, out string statName);
-				
+				switch (stat.Stat.Name)
+				{
+					case "hp":
+						HP = stat.BaseStat;
+						continue;
+					case "attack":
+						Attack = stat.BaseStat;
+						continue;
+					case "defense":
+						Defense = stat.BaseStat;
+						continue;
+					case "special-attack":
+						SpecialAttack = stat.BaseStat;
+						continue;
+					case "special-defense":
+						SpecialDefense = stat.BaseStat;
+						continue;
+					case "speed":
+						Speed = stat.BaseStat;
+						continue;
+				}
 			}
 		}
 
@@ -40,12 +57,12 @@ namespace WpfLibrary1
 		[JsonPropertyName("Type")]
 		public PokeType Type { get; set; }
 
-		public Stat HP { get; set; } = new(nameof(HP), 0);
-		public Stat Attack { get; set; } = new(nameof(Attack), 0);
-		public Stat Defense { get; set; } = new(nameof(Defense), 0);
-		public Stat SpecialAttack { get; set; } = new(nameof(SpecialAttack), 0);
-		public Stat SpecialDefense { get; set; } = new(nameof(SpecialDefense), 0);
-		public Stat Speed { get; set; } = new(nameof(Speed), 0);
+		public int HP { get; set; }
+		public int Attack { get; set; }
+		public int Defense { get; set; }
+		public int SpecialAttack { get; set; }
+		public int SpecialDefense { get; set; }
+		public int Speed { get; set; }
 
 		public override string ToString()
 		{
@@ -56,12 +73,12 @@ namespace WpfLibrary1
 				sb.Append($" - {Type.SlotTwo}");
 			}
 			sb.AppendLine();
-			sb.AppendLine(HP.ToString());
-			sb.AppendLine(Attack.ToString());
-			sb.AppendLine(Defense.ToString());
-			sb.AppendLine(SpecialAttack.ToString());
-			sb.AppendLine(SpecialDefense.ToString());
-			sb.AppendLine(Speed.ToString());
+			sb.AppendLine($"HP: {HP.ToString()}");
+			sb.AppendLine($"Attack: {Attack.ToString()}");
+			sb.AppendLine($"Defense: {Defense.ToString()}");
+			sb.AppendLine($"Special Attack: {SpecialAttack.ToString()}");
+			sb.AppendLine($"Special Defense: {SpecialDefense.ToString()}");
+			sb.AppendLine($"Speed: {Speed.ToString()}");
 			return sb.ToString();
 		}
 

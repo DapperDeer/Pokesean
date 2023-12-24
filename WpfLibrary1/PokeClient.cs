@@ -23,7 +23,7 @@ namespace WpfLibrary1
 		public async Task<IEnumerable<Pokemon>> GetAllPokemon()
 		{
 			var pokemon = new List<Pokemon>();
-			var result = await _client.GetNamedResourcePageAsync<PokeApiNet.Pokemon>(100, 0);
+			var result = await _client.GetNamedResourcePageAsync<PokeApiNet.Pokemon>(151, 0);
 			foreach (var page in result.Results)
 			{
 				try
