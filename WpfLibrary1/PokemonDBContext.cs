@@ -25,6 +25,9 @@ namespace WpfLibrary1
 					e => e.ToString(),
 					e => (Types)Enum.Parse(typeof(Types), e));
 
+			modelBuilder.Entity<Pokemon>()
+				.Ignore(e => e.ImageSource);
+
 			base.OnModelCreating(modelBuilder);
 		}
 	}

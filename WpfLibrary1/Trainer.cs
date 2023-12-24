@@ -8,21 +8,21 @@ namespace WpfLibrary1
 		[JsonConstructor]
 		public Trainer(string name)
 		{
-			this.Name = name;
-			this.Party = new List<Pokemon>(6);
-			this.PokemonBank = new List<Pokemon>();
+			Name = name;
+			Party = new List<Pokemon>(6);
+			PokemonBank = new List<Pokemon>();
 		}
 
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			sb.AppendLine($"Name: {this.Name}");
-			if (this.Party.Any())
+			sb.AppendLine($"Name: {Name}");
+			if (Party.Any())
 			{
 				sb.AppendLine($"Pokemon in Party:");
-				for (int i = 0; i < this.Party.Count; i++)
+				for (int i = 0; i < Party.Count; i++)
 				{
-					sb.AppendLine($"{i + 1}. {this.Party[i]}");
+					sb.AppendLine($"{i + 1}. {Party[i]}");
 				}
 			}
 			else
@@ -30,10 +30,10 @@ namespace WpfLibrary1
 				sb.AppendLine("This trainer has no Pokemon.");
 			}
 
-			if (this.PokemonBank.Any())
+			if (PokemonBank.Any())
 			{
 				sb.AppendLine($"Pokemon in Storage: ");
-				foreach (var pokemon in this.PokemonBank)
+				foreach (var pokemon in PokemonBank)
 				{
 					sb.AppendLine(pokemon.ToShortString());
 				}

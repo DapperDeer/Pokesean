@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Windows.Media.Imaging;
 
 namespace WpfLibrary1
 {
@@ -13,7 +14,7 @@ namespace WpfLibrary1
 		{
 		}
 
-		public Pokemon(string name, int dexNumber, IEnumerable<PokemonType> types, IEnumerable<PokemonStat> stats)
+		public Pokemon(string name, int dexNumber, IEnumerable<PokemonType> types, IEnumerable<PokemonStat> stats, Uri imageSource)
 		{
 			var nameArray = name.ToCharArray();
 			nameArray[0] = char.ToUpper(nameArray[0]);
@@ -44,6 +45,7 @@ namespace WpfLibrary1
 						continue;
 				}
 			}
+			ImageSource = new BitmapImage(imageSource);
 		}
 
 		[JsonPropertyName("Name")]
@@ -56,6 +58,8 @@ namespace WpfLibrary1
 		[ForeignKey(nameof(PokeType.Id))]
 		[JsonPropertyName("Type")]
 		public PokeType Type { get; set; }
+
+		public BitmapImage ImageSource { get; set; }
 
 		public int HP { get; set; }
 		public int Attack { get; set; }

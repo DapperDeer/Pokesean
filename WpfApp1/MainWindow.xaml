@@ -22,35 +22,33 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<ComboBox
-			Grid.Column="1"
-			x:Name="drpdwnAddPokemon"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Margin="10,10,0,0"
-			Width="120"
-			DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
-			ItemsSource="{Binding PokemonCoordinator.Pokemon, UpdateSourceTrigger=PropertyChanged, BindsDirectlyToSource=True}">
+				Grid.Column="1"
+				x:Name="drpdwnAddPokemon"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="10,10,0,0"
+				Width="120"
+				DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
+				ItemsSource="{Binding PokemonCoordinator.Pokemon, UpdateSourceTrigger=PropertyChanged, BindsDirectlyToSource=True}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Name}"/>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
-			<Button
-			Grid.Column="1"
-			Grid.Row="0"
-			Width="100" Height="20"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Margin="10,35,0,0"
-			x:Name="Add"
-			Content="Add">
-			</Button>
-			<TextBlock
-			x:Name="pokemonDetails"
-			Grid.Column="1"
-			Grid.Row="1">
-			</TextBlock>
-		</Grid>
+            <Button
+				Grid.Column="1"
+				Grid.Row="0"
+				Width="100" Height="20"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="10,35,0,0"
+				x:Name="Add"
+				Content="Add">
+            </Button>
+            <ContentControl Grid.Row="1" Grid.Column="1" Background="Teal">
+                <local:PokemonDetails Pokemon="{Binding PokemonCoordinator.Pokemon}"/>
+            </ContentControl>
+        </Grid>
 	</Grid>
 </Window>

@@ -40,10 +40,7 @@ namespace WpfApp1
 
 		private void DrpdwnAddPokemon_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
-			if (drpdwnAddPokemon.SelectedItem is Pokemon pokemon)
-			{
-				pokemonDetails.Text = pokemon.ToString();
-			}
+
 		}
 
 		public PokemonCoordinator PokemonCoordinator { get; }

@@ -15,7 +15,7 @@ namespace WpfLibrary1
 		public async Task<Pokemon> GetPokemon(int dexNumber)
 		{
 			var pkmn = await _client.GetResourceAsync<PokeApiNet.Pokemon>(dexNumber);
-			var pokemon = new Pokemon(pkmn.Name, pkmn.Id, pkmn.Types, pkmn.Stats);
+			var pokemon = new Pokemon(pkmn.Name, pkmn.Id, pkmn.Types, pkmn.Stats, new Uri(pkmn.Sprites.Other.Home.FrontDefault));
 
 			return pokemon;
 		}
@@ -29,7 +29,7 @@ namespace WpfLibrary1
 				try
 				{
 					var pkmn = await _client.GetResourceAsync(page);
-					pokemon.Add(new Pokemon(pkmn.Name, pkmn.Id, pkmn.Types, pkmn.Stats));
+					pokemon.Add(new Pokemon(pkmn.Name, pkmn.Id, pkmn.Types, pkmn.Stats, new Uri(pkmn.Sprites.Other.Home.FrontDefault)));
 				}
 				catch (Exception ex)
 				{

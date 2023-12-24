@@ -8,8 +8,6 @@ namespace WpfApp1
 	/// </summary>
 	public partial class UserControl1 : UserControl
 	{
-		private readonly TrainerVM? _trainerVM;
-
 		public UserControl1()
 		{
 			InitializeComponent();

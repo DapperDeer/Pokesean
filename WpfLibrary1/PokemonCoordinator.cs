@@ -54,6 +54,8 @@ namespace WpfLibrary1
 			}
 		}
 
+		public List<Pokemon> GetPokemon() => _pokemon.ToList();
+
 		public ObservableCollection<Pokemon> Pokemon
 		{
 			get { return _pokemon; }
