@@ -14,6 +14,11 @@ namespace WpfLibrary1
 		{
 		}
 
+		public Pokemon(string name, int dexNumber, IEnumerable<PokemonType> types, IEnumerable<PokemonStat> stats, string imageSource)
+			: this(name, dexNumber, types, stats, new Uri(imageSource))
+		{
+		}
+
 		public Pokemon(string name, int dexNumber, IEnumerable<PokemonType> types, IEnumerable<PokemonStat> stats, Uri imageSource)
 		{
 			var nameArray = name.ToCharArray();
@@ -97,4 +102,14 @@ namespace WpfLibrary1
 			return sb.ToString();
 		}
 	}
+
+    public static class  PokemonExtensions
+    {
+        public static bool IsOfType(this Pokemon pokemon, Types type, bool monotypeOnly = false)
+		{
+			return monotypeOnly 
+				? pokemon.Type.SlotOne == type && pokemon.Type.SlotTwo == Types.None 
+				: pokemon.Type.SlotOne == type || pokemon.Type.SlotTwo == type;
+		}
+    }
 }

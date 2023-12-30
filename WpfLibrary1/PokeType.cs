@@ -31,6 +31,11 @@ namespace WpfLibrary1
 
 	public static class PokeTypeUtilities
 	{
+		public static IEnumerable<string> GetTypes()
+		{
+			return Enum.GetNames(typeof(Types));
+		}
+
 		public static PokeType PokeTypeConverter(IEnumerable<PokemonType> pokemonTypes)
 		{
 			var type = new PokeType();
@@ -47,7 +52,7 @@ namespace WpfLibrary1
 			}
 
 			return type;
-			Types GetType(PokemonType type)
+			static Types GetType(PokemonType type)
 			{
 				switch (type.Type.Name)
 				{

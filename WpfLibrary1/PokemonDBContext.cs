@@ -26,7 +26,10 @@ namespace WpfLibrary1
 					e => (Types)Enum.Parse(typeof(Types), e));
 
 			modelBuilder.Entity<Pokemon>()
-				.Ignore(e => e.ImageSource);
+				.Property(e => e.ImageSource)
+				.HasConversion(
+					src => src.ToString(),
+					src => new System.Windows.Media.Imaging.BitmapImage(new Uri(src)));
 
 			base.OnModelCreating(modelBuilder);
 		}

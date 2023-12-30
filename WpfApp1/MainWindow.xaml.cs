@@ -1,58 +1,48 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using WpfLibrary1;
 
 namespace WpfApp1
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window, INotifyPropertyChanged
-	{
-		public event PropertyChangedEventHandler? PropertyChanged;
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-		private readonly PokeClient _pokeClient;
-		private readonly PokemonCoordinator _pokemonCoordinator;
-		private readonly ITrainerCoordinator _trainerCoordinator;
+        private readonly ITrainerCoordinator _trainerCoordinator;
 
-		public MainWindow(ITrainerCoordinator trainerCoordinator, IViewModelFactory<TrainerVM> factory, PokemonCoordinator pokemonCoordinator)
-		{
-			InitializeComponent();
-			_trainerCoordinator = trainerCoordinator;
-			_pokeClient = new PokeClient();
-			drpdwnAddPokemon.SelectionChanged += DrpdwnAddPokemon_SelectionChanged;
-			Add.Click += Add_Click;
-			PokemonCoordinator = pokemonCoordinator;
-			Task.Factory.StartNew(async () => await PokemonCoordinator.Initialize());
-		}
+        public MainWindow(ITrainerCoordinator trainerCoordinator, PokemonVM pokemonVM)
+        {
+            InitializeComponent();
+            DataContext = this;
+            _trainerCoordinator = trainerCoordinator;
+            PokemonVM = pokemonVM;
+        }
 
-		private void Add_Click(object sender, RoutedEventArgs e)
-		{
-			if (_trainerCoordinator.CurrentTrainer == null || drpdwnAddPokemon.SelectedItem is not Pokemon pokemon)
-			{
-				return;
-			}
+        public void NotifyPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
-			_trainerCoordinator.CurrentTrainer.Party.Add(pokemon);
-		}
+        public Trainer? CurrentTrainer
+        {
+            get { return _currentTrainer; }
+            set
+            {
+                if (_trainerCoordinator.CurrentTrainer != value)
+                {
+                    _trainerCoordinator.LoadTrainer();
+                    _currentTrainer = _trainerCoordinator.CurrentTrainer;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        private Trainer? _currentTrainer;
 
-		private void DrpdwnAddPokemon_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		{
-
-		}
-
-		public PokemonCoordinator PokemonCoordinator { get; }
-
-		public void NotifyPropertyChanged(string name)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-			}
-		}
-
-		public Trainer? CurrentTrainer => _trainerCoordinator.CurrentTrainer;
+        public PokemonVM PokemonVM { get; set; }
 	}
 }

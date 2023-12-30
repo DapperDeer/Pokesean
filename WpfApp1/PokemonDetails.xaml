@@ -4,19 +4,69 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpfApp1="clr-namespace:WpfApp1" 
-             d:DataContext="{d:DesignInstance Type=wpfApp1:PokemonDetails}"
+             d:DataContext="{d:DesignInstance Type=wpfApp1:PokemonVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="820">
     <Grid>
-        <ListView ItemsSource="{Binding Pokemon}">
-            <ListView.ItemTemplate>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <CheckBox
+            Grid.Row="0"
+            Margin="0,5,0,0"
+            x:Name="MonotypeCheckbox"
+            Content="Monotype"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <ComboBox
+                Grid.Row="1"
+			    x:Name="TypeComboboxSlotOne"
+			    HorizontalAlignment="Left"
+			    VerticalAlignment="Top"
+			    Margin="0,5,0,0"
+			    Width="120"
+			    ItemsSource="{Binding Types}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox
+                Grid.Row="1"
+			    x:Name="TypeComboboxSlotTwo"
+			    HorizontalAlignment="Left"
+			    VerticalAlignment="Top"
+			    Margin="10,5,0,0"
+			    Width="120"
+			    ItemsSource="{Binding Types}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <ListBox
+            x:Name="PokemonListBox"
+            Grid.Row="2"
+            HorizontalContentAlignment="Center"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+			ItemsSource="{Binding Pokemon}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding ImageSource}" />
-                        <TextBlock Text="{Binding Name}"/>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding ImageSource}" Width="64" Height="64" />
+                        <TextBlock Text="{Binding Name}" />
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

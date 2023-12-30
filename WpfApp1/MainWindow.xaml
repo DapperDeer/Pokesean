@@ -6,49 +6,22 @@
 		xmlns:local="clr-namespace:WpfApp1"
 		x:Class="WpfApp1.MainWindow"
 		mc:Ignorable="d"
-		Title="MainWindow" Height="450" Width="800"
-		d:DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}">
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="250"/>
-			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
-		<ContentControl Grid.Column="0">
-			<local:UserControl1/>
-		</ContentControl>
-		<Grid Grid.Column="1">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="75" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			<ComboBox
-				Grid.Column="1"
-				x:Name="drpdwnAddPokemon"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Top"
-				Margin="10,10,0,0"
-				Width="120"
-				DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
-				ItemsSource="{Binding PokemonCoordinator.Pokemon, UpdateSourceTrigger=PropertyChanged, BindsDirectlyToSource=True}">
-				<ComboBox.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding Name}"/>
-					</DataTemplate>
-				</ComboBox.ItemTemplate>
-			</ComboBox>
-            <Button
-				Grid.Column="1"
-				Grid.Row="0"
-				Width="100" Height="20"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Top"
-				Margin="10,35,0,0"
-				x:Name="Add"
-				Content="Add">
-            </Button>
-            <ContentControl Grid.Row="1" Grid.Column="1" Background="Teal">
-                <local:PokemonDetails Pokemon="{Binding PokemonCoordinator.Pokemon}"/>
-            </ContentControl>
-        </Grid>
-	</Grid>
+		Title="MainWindow" Height="450" Width="810">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:PokemonVM}">
+            <local:PokemonDetails/>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Grid.Column="0">
+            <!--<local:UserControl1 Trainer="{Binding CurrentTrainer, UpdateSourceTrigger=PropertyChanged}"/>-->
+        </ContentControl>
+        <ContentControl Grid.Column="1" Content="{Binding PokemonVM}"/>
+    </Grid>
 </Window>

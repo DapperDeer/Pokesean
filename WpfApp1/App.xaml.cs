@@ -19,10 +19,11 @@ namespace WpfApp1
 		{
 			var serviceCollection = new ServiceCollection();
 			serviceCollection.AddSingleton<ITrainerCoordinator, TrainerCoordinator>();
+			serviceCollection.AddSingleton<IPokemonCoordinator, PokemonCoordinator>();
 			serviceCollection.AddSingleton<IPokeClient, PokeClient>();
 			serviceCollection.AddViewModelFactory<TrainerVM>();
+			serviceCollection.AddViewModelFactory<PokemonVM>();
 			serviceCollection.AddSqliteDatabase();
-			serviceCollection.AddSingleton<PokemonCoordinator>();
 			serviceCollection.AddSingleton<MainWindow>();
 			_serviceProvider = serviceCollection.BuildServiceProvider();
 		}

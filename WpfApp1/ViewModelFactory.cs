@@ -28,7 +28,7 @@ namespace WpfApp1
 			where T : class
 		{
 			services.AddTransient<T>();
-			services.AddTransient<Func<T>>(x => () => x.GetService<T>());
+			services.AddTransient<Func<T>>(x => () => x.GetService<T>()!);
 			services.AddSingleton<IViewModelFactory<T>, ViewModelFactory<T>>();
 		}
 	}

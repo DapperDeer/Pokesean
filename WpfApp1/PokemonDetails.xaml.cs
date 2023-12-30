@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using WpfLibrary1;
 
 namespace WpfApp1
@@ -8,29 +10,53 @@ namespace WpfApp1
     /// <summary>
     /// Interaction logic for PokemonDetails.xaml
     /// </summary>
-    public partial class PokemonDetails : UserControl
+    public partial class PokemonDetails : UserControl, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty PokemonContentsProperty = DependencyProperty.Register(
-            name: "Pokemon",
-            propertyType: typeof(ObservableCollection<Pokemon>),
-            ownerType: typeof(PokemonDetails),
-            typeMetadata: new FrameworkPropertyMetadata(OnCollectionChanged));
+        private bool _monotypesOnly;
+        private readonly ICollectionView _pokemonListBox;
 
         public PokemonDetails()
         {
             InitializeComponent();
-            SetValue(PokemonContentsProperty, new ObservableCollection<Pokemon>());
+            _pokemonListBox = CollectionViewSource.GetDefaultView(PokemonListBox.Items);
+            MonotypeCheckbox.Click += OnMonotypeToggle;
+            TypeComboboxSlotOne.SelectionChanged += OnFiltersChanged;
+            TypeComboboxSlotTwo.SelectionChanged += OnFiltersChanged;
         }
 
-        public static void OnCollectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void OnMonotypeToggle(object sender, RoutedEventArgs e)
         {
-            var newValue = e.NewValue as List<Pokemon>;
+            TypeComboboxSlotTwo.IsEnabled = _monotypesOnly;
+            _monotypesOnly = !_monotypesOnly;
+            OnFiltersChanged(sender, e);
+            return;
         }
 
-        public ObservableCollection<Pokemon> Pokemon
+        public void OnFiltersChanged(object sender, RoutedEventArgs e)
         {
-            get => (ObservableCollection<Pokemon>)GetValue(PokemonContentsProperty);
-            set => SetValue(PokemonContentsProperty, value);
+            _pokemonListBox.Filter = (o) =>
+            {
+                if (o is not Pokemon pokemon)
+                {
+                    throw new InvalidOperationException("Trying to filter on an object that is not a Pokemon.");
+                }
+
+                if (!Enum.TryParse<Types>((string)TypeComboboxSlotOne.SelectedItem, out var typeOne))
+                {
+                    typeOne = Types.None;
+                }
+
+                if (!Enum.TryParse<Types>((string)TypeComboboxSlotTwo.SelectedItem, out var typeTwo))
+                {
+                    typeTwo = Types.None;
+                }
+
+                var filter = PokemonFilterBuilder.BuildTypeFilter(typeOne, typeTwo, _monotypesOnly);
+                return filter.PassesFilter(pokemon);
+            };
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }
+// i love you :)

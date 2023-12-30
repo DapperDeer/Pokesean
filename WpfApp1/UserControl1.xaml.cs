@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using WpfLibrary1;
 
 namespace WpfApp1
 {
@@ -27,5 +30,29 @@ namespace WpfApp1
 		{
 			//_trainerCoordinator.NewTrainer(txtTrainerName.Text);
 		}
+
+        public Trainer Trainer
+        {
+            get => (Trainer)GetValue(PokemonTrainerProperty);
+            set
+            {
+                SetValue(PokemonTrainerProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty PokemonTrainerProperty = DependencyProperty.Register(
+			name: "Trainer",
+			propertyType: typeof(Trainer),
+			ownerType: typeof(UserControl1),
+			typeMetadata: new FrameworkPropertyMetadata
+			{
+				PropertyChangedCallback = (sender, e) =>
+				{
+					if (e.OldValue != e.NewValue && sender is UserControl1 trainerDetails && e.NewValue is Trainer trainer)
+					{
+						trainerDetails.SetCurrentValue(PokemonTrainerProperty, trainer);
+					}
+				}
+			});
 	}
 }
