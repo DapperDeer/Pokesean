@@ -3,30 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:wpfApp1="clr-namespace:WpfApp1" 
+             xmlns:wpfApp1="clr-namespace:WpfApp1"
+             xmlns:wpfLib="clr-namespace:WpfLibrary1;assembly=WpfLibrary1"
              d:DataContext="{d:DesignInstance Type=wpfApp1:PokemonVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="820">
+    <UserControl.Resources>
+        <wpfApp1:PokemonSortingConverter x:Key="PokemonSortingConverter"/>
+
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="55" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <CheckBox
-            Grid.Row="0"
-            Margin="0,5,0,0"
-            x:Name="MonotypeCheckbox"
-            Content="Monotype"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <CheckBox
+                Margin="0,5,0,0"
+                x:Name="MonotypeCheckbox"
+                Content="Monotype"
+                IsChecked="{Binding MonotypesOnly}"/>
+            <Button 
+                Margin="5,0,0,0"
+                Width="100"
+                x:Name="AlphabeticalSortToggle"
+                Content="Sort by Name"
+                Command="{Binding AlphabeticalSort}"
+                ToolTip="{Binding NameSortDirection, Converter={StaticResource PokemonSortingConverter}}"/>
+            <Button 
+                Margin="5,0,0,0"
+                Width="150"
+                x:Name="PokedexNumberSortToggle"
+                Content="Sort by Pokedex Number"
+                Command="{Binding PokedexNumberSort}"
+                ToolTip="{Binding PokedexSortDirection, Converter={StaticResource PokemonSortingConverter}}"/>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <ComboBox
                 Grid.Row="1"
-			    x:Name="TypeComboboxSlotOne"
-			    HorizontalAlignment="Left"
-			    VerticalAlignment="Top"
-			    Margin="0,5,0,0"
-			    Width="120"
-			    ItemsSource="{Binding Types}">
+                x:Name="TypeComboboxSlotOne"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="0,5,0,0"
+                Width="120"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedTypeOne}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}"/>
@@ -35,12 +57,13 @@
             </ComboBox>
             <ComboBox
                 Grid.Row="1"
-			    x:Name="TypeComboboxSlotTwo"
-			    HorizontalAlignment="Left"
-			    VerticalAlignment="Top"
-			    Margin="10,5,0,0"
-			    Width="120"
-			    ItemsSource="{Binding Types}">
+                x:Name="TypeComboboxSlotTwo"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10,5,0,0"
+                Width="120"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedTypeTwo}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}"/>
@@ -51,22 +74,30 @@
         <ListBox
             x:Name="PokemonListBox"
             Grid.Row="2"
-            HorizontalContentAlignment="Center"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-			ItemsSource="{Binding Pokemon}">
+            ItemsSource="{Binding Pokemon}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <!--<Setter Property="OverridesDefaultStyle" Value="True"/>-->
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <StackPanel Orientation="Vertical">
+                                    <Image Source="{Binding ImageSource}" Width="64" Height="64" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <Image Source="{Binding ImageSource}" Width="64" Height="64" />
-                        <TextBlock Text="{Binding Name}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </UserControl>

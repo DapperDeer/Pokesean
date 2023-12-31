@@ -36,7 +36,7 @@
                     return true;
                 }
 
-                if (TypesToFilter[0] == Types.None && TypesToFilter[1] == Types.None)
+                if (TypesToFilter[0] == Types.None && TypesToFilter[1] == Types.None && !IsMonotype)
                 {
                     return true;
                 }

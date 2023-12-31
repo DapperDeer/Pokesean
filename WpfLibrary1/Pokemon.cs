@@ -107,6 +107,14 @@ namespace WpfLibrary1
     {
         public static bool IsOfType(this Pokemon pokemon, Types type, bool monotypeOnly = false)
 		{
+			if (monotypeOnly)
+			{
+				if (type == Types.None)
+				{
+					return pokemon.Type.SlotTwo == Types.None;
+				}
+			}
+
 			return monotypeOnly 
 				? pokemon.Type.SlotOne == type && pokemon.Type.SlotTwo == Types.None 
 				: pokemon.Type.SlotOne == type || pokemon.Type.SlotTwo == type;

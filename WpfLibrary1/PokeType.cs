@@ -33,7 +33,10 @@ namespace WpfLibrary1
 	{
 		public static IEnumerable<string> GetTypes()
 		{
-			return Enum.GetNames(typeof(Types));
+			var types = Enum.GetNames(typeof(Types)).Where(t => t != Types.None.ToString()).ToList();
+			types.Sort();
+			types.Add(Types.None.ToString());
+			return types;
 		}
 
 		public static PokeType PokeTypeConverter(IEnumerable<PokemonType> pokemonTypes)
