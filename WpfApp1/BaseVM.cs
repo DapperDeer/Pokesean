@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
+using System.Windows.Input;
 
 namespace WpfApp1
 {
@@ -9,10 +8,9 @@ namespace WpfApp1
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public ObservableDictionary<BaseCommand> Commands { get; set; }
-
         public BaseVM()
         {
+            Commands = [];
         }
 
         public virtual void NotifyPropertyChanged([CallerMemberName] string name = "")
@@ -22,5 +20,7 @@ namespace WpfApp1
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        public Dictionary<string, ICommand> Commands { get; set; }
     }
 }

@@ -4,7 +4,6 @@
     {
         public PokemonFilter()
         {
-            
         }
 
         public virtual bool PassesFilter(Pokemon pokemon)

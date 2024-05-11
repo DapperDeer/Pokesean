@@ -6,10 +6,8 @@ namespace WpfApp1
     /// <summary>
     /// Interaction logic for PokemonDetails.xaml
     /// </summary>
-    public partial class PokemonDetails : UserControl, INotifyPropertyChanged
+    public partial class PokemonDetails : UserControl
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         public PokemonDetails()
         {
             InitializeComponent();
