@@ -25,8 +25,9 @@ namespace WpfLibrary1
 		[JsonPropertyName("TypeSlotTwo")]
 		public Types SlotTwo { get; set; } = Types.None;
 
-		public string StrongAgainst { get; }
-		public string WeakAgainst { get; }
+		// These should probably be Types[]?
+		public string StrongAgainst { get; } = string.Empty;
+		public string WeakAgainst { get; } = string.Empty;
 	}
 
 	public static class PokeTypeUtilities

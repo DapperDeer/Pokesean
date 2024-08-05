@@ -9,7 +9,7 @@ namespace WpfLibrary1
 		event PropertyChangedEventHandler? PropertyChanged;
 
 		Task GetAllPokemon();
-		IEnumerable<Pokemon> Pokemon { get; }
+		IEnumerable<Pokemon>? Pokemon { get; }
 	}
 
 	public class PokemonCoordinator : IPokemonCoordinator, INotifyPropertyChanged

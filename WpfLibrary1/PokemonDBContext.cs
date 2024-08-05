@@ -2,14 +2,9 @@
 
 namespace WpfLibrary1
 {
-	public class PokemonDBContext : DbContext
+	public class PokemonDBContext(DbContextOptions dbContextOptions) : DbContext(dbContextOptions)
 	{
 		public DbSet<Pokemon> Pokemon { get; set; }
-
-		public PokemonDBContext(DbContextOptions dbContextOptions)
-			: base(dbContextOptions)
-		{
-		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -28,7 +23,7 @@ namespace WpfLibrary1
 			modelBuilder.Entity<Pokemon>()
 				.Property(e => e.ImageSource)
 				.HasConversion(
-					src => src.ToString(),
+					src => src!.ToString(),
 					src => new System.Windows.Media.Imaging.BitmapImage(new Uri(src)));
 
 			base.OnModelCreating(modelBuilder);

@@ -15,8 +15,10 @@ namespace WpfApp1
 			_pokemonCoordinator = pokemonCoordinator;
 			_pokemonCoordinator.PropertyChanged += (s, e) =>
 			{
-				Pokemon = new ObservableCollection<Pokemon>(_pokemonCoordinator.Pokemon);
+				// If the Property has changed, the collection shouldn't be null - this will need to change if the PokemonCoordinator gains more responsibility.
+				Pokemon = new ObservableCollection<Pokemon>(_pokemonCoordinator.Pokemon!);
 			};
+			// There's definitely potential for some kind of threading issue here, but it's probably fine for the simplicity of this app.
 			_pokemonCoordinator.GetAllPokemon().ConfigureAwait(false);
 			_pokemonListBoxItems = CollectionViewSource.GetDefaultView(Pokemon);
 
@@ -50,9 +52,9 @@ namespace WpfApp1
 				NotifyPropertyChanged(nameof(PokemonSearchText));
 			}
 		}
-		private string _pokemonSearchText;
+		private string _pokemonSearchText = string.Empty;
 
-		public ObservableCollection<Pokemon> Pokemon
+		public ObservableCollection<Pokemon>? Pokemon
 		{
 			get { return _pokemon; }
 			set
@@ -64,7 +66,7 @@ namespace WpfApp1
 				}
 			}
 		}
-		private ObservableCollection<Pokemon> _pokemon;
+		private ObservableCollection<Pokemon>? _pokemon;
 
 		private void OnSelectionChanged(object? sender, PropertyChangedEventArgs e)
 		{

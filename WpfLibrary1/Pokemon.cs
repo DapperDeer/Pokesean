@@ -10,6 +10,7 @@ namespace WpfLibrary1
 	[Table("Pokemon")]
 	public class Pokemon
 	{
+		// Private default constructor for JSON serialization/DB-table creation.
 		private Pokemon()
 		{
 		}
@@ -54,7 +55,7 @@ namespace WpfLibrary1
 		}
 
 		[JsonPropertyName("Name")]
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 
 		[Key]
 		[JsonPropertyName("Pokedex Number")]
@@ -62,9 +63,9 @@ namespace WpfLibrary1
 
 		[ForeignKey(nameof(PokeType.Id))]
 		[JsonPropertyName("Type")]
-		public PokeType Type { get; set; }
+		public PokeType? Type { get; set; }
 
-		public BitmapImage ImageSource { get; set; }
+		public BitmapImage? ImageSource { get; set; }
 
 		public int HP { get; set; }
 		public int Attack { get; set; }
@@ -76,7 +77,7 @@ namespace WpfLibrary1
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			sb.Append($"{this.Name} - {this.Type.SlotOne}");
+			sb.Append($"{this.Name} - {this.Type!.SlotOne}");
 			if (Type.SlotTwo != Types.None)
 			{
 				sb.Append($" - {Type.SlotTwo}");
@@ -94,7 +95,7 @@ namespace WpfLibrary1
 		public string ToShortString()
 		{
 			var sb = new StringBuilder();
-			sb.Append($"{this.Name} - {this.Type.SlotOne}");
+			sb.Append($"{this.Name} - {this.Type!.SlotOne}");
 			if (Type.SlotTwo != Types.None)
 			{
 				sb.Append($" - {Type.SlotTwo}");
@@ -103,21 +104,21 @@ namespace WpfLibrary1
 		}
 	}
 
-    public static class  PokemonExtensions
-    {
-        public static bool IsOfType(this Pokemon pokemon, Types type, bool monotypeOnly = false)
+	public static class PokemonExtensions
+	{
+		public static bool IsOfType(this Pokemon pokemon, Types type, bool monotypeOnly = false)
 		{
 			if (monotypeOnly)
 			{
 				if (type == Types.None)
 				{
-					return pokemon.Type.SlotTwo == Types.None;
+					return pokemon.Type!.SlotTwo == Types.None;
 				}
 			}
 
-			return monotypeOnly 
-				? pokemon.Type.SlotOne == type && pokemon.Type.SlotTwo == Types.None 
-				: pokemon.Type.SlotOne == type || pokemon.Type.SlotTwo == type;
+			return monotypeOnly
+				? pokemon.Type!.SlotOne == type && pokemon.Type.SlotTwo == Types.None
+				: pokemon.Type!.SlotOne == type || pokemon.Type.SlotTwo == type;
 		}
-    }
+	}
 }

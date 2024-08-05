@@ -32,7 +32,7 @@ namespace WpfLibrary1
 			return CurrentTrainer;
 		}
 
-		private void OnFileOk(object sender, CancelEventArgs e)
+		private void OnFileOk(object? sender, CancelEventArgs e)
 		{
 			if (sender is not OpenFileDialog dialog)
 			{
