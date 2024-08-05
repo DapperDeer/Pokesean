@@ -7,16 +7,11 @@ namespace WpfApp1
 		T CreateViewModel();
 	}
 
-	public class ViewModelFactory<T> : IViewModelFactory<T>
+	public class ViewModelFactory<T>(Func<T> factory) : IViewModelFactory<T>
 	{
-		private readonly Func<T> _factory;
+		private readonly Func<T> _factory = factory;
 
-        public ViewModelFactory(Func<T> factory)
-        {
-			_factory = factory;
-        }
-
-        public T CreateViewModel()
+		public T CreateViewModel()
 		{
 			return _factory();
 		}

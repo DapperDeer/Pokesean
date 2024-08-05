@@ -7,8 +7,9 @@ namespace WpfLibrary1
 	{
 		public PokemonDBContext CreateDbContext(string[] args)
 		{
+			string fileName = $"{Environment.CurrentDirectory}\\pokemon.db";
 			var optionsBuilder = new DbContextOptionsBuilder();
-			optionsBuilder.UseSqlite(@$"Data Source={Environment.CurrentDirectory}\pokemon20.db");
+			optionsBuilder.UseSqlite(@$"Data Source={fileName}");
 
 			return new PokemonDBContext(optionsBuilder.Options);
 		}
@@ -16,9 +17,7 @@ namespace WpfLibrary1
 
 	public static class ContextFactoryExtensions
 	{ 
-		public static PokemonDBContext CreateDbContext(this IDesignTimeDbContextFactory<PokemonDBContext> contextFactory)
-		{
-			return contextFactory.CreateDbContext(Array.Empty<string>());
-		}
+		public static PokemonDBContext CreateDbContext(this IDesignTimeDbContextFactory<PokemonDBContext> contextFactory) =>
+			contextFactory.CreateDbContext(Array.Empty<string>());
 	}
 }
