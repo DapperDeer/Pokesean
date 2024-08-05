@@ -5,165 +5,122 @@ using WpfLibrary1;
 
 namespace WpfApp1
 {
-    public class PokemonVM : BaseVM
-    {
-        private readonly IPokemonCoordinator _pokemonCoordinator;
-        private readonly ICollectionView _pokemonListBoxItems;
+	public class PokemonVM : BaseVM
+	{
+		private readonly IPokemonCoordinator _pokemonCoordinator;
+		private readonly ICollectionView _pokemonListBoxItems;
 
-        public PokemonVM(IPokemonCoordinator pokemonCoordinator)
-        {
-            _pokemonCoordinator = pokemonCoordinator;
-            _pokemonCoordinator.PropertyChanged += (s, e) =>
-            {
-                Pokemon = new ObservableCollection<Pokemon>(_pokemonCoordinator.Pokemon);
-            };
-            _pokemonCoordinator.GetAllPokemon().ConfigureAwait(false);
-            _pokemonListBoxItems = CollectionViewSource.GetDefaultView(Pokemon);
+		public PokemonVM(IPokemonCoordinator pokemonCoordinator)
+		{
+			_pokemonCoordinator = pokemonCoordinator;
+			_pokemonCoordinator.PropertyChanged += (s, e) =>
+			{
+				Pokemon = new ObservableCollection<Pokemon>(_pokemonCoordinator.Pokemon);
+			};
+			_pokemonCoordinator.GetAllPokemon().ConfigureAwait(false);
+			_pokemonListBoxItems = CollectionViewSource.GetDefaultView(Pokemon);
 
-            PropertyChanged += OnSelectionChanged;
-            AlphabeticalSort = new RelayCommand(_ => AlphabeticalSortCommand());
-            PokedexNumberSort = new RelayCommand(_ => PokedexNumberSortCommand());
-        }
+			PokemonFilterVM = new PokemonFilterVM();
+			PokemonFilterVM.PropertyChanged += OnSelectionChanged;
+			AlphabeticalSort = new RelayCommand(_ => AlphabeticalSortCommand());
+			PokedexNumberSort = new RelayCommand(_ => PokedexNumberSortCommand());
+		}
 
-        private void OnSelectionChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (_pokemonListBoxItems == null)
-            {
-                // Probably just haven't painted/initialized the ListBox yet.
-                return;
-            }
+		public PokemonFilterVM PokemonFilterVM { get; set; }
 
-            _pokemonListBoxItems.Filter = (o) =>
-            {
-                if (o is not Pokemon pokemon)
-                {
-                    return false;
-                }
+		public ListSortDirection NameSortDirection { get; set; } = ListSortDirection.Ascending;
 
-                var filter = PokemonFilterBuilder.BuildTypeFilter(SelectedTypeOne, SelectedTypeTwo, MonotypesOnly);
+		public ListSortDirection PokedexSortDirection { get; set; } = ListSortDirection.Ascending;
 
-                if (!string.IsNullOrEmpty(PokemonSearchText))
-                {
-                    if (!pokemon.Name.Contains(PokemonSearchText, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        return false;
-                    }
-                }
+		public RelayCommand AlphabeticalSort { get; }
 
-                return filter.PassesFilter(pokemon);
-            };
-        }
+		public RelayCommand PokedexNumberSort { get; }
 
-        private void AlphabeticalSortCommand()
-        {
-            _pokemonListBoxItems.SortDescriptions.Clear();
-            _pokemonListBoxItems.SortDescriptions.Add(new SortDescription(nameof(WpfLibrary1.Pokemon.Name), NameSortDirection));
-            if (NameSortDirection == ListSortDirection.Ascending)
-            {
-                NameSortDirection = ListSortDirection.Descending;
-            }
-            else
-            {
-                NameSortDirection = ListSortDirection.Ascending;
-            }
-        }
+		public IEnumerable<string> Types => PokeTypeUtilities.GetTypes();
 
-        private void PokedexNumberSortCommand()
-        {
-            _pokemonListBoxItems.SortDescriptions.Clear();
-            _pokemonListBoxItems.SortDescriptions.Add(new SortDescription(nameof(WpfLibrary1.Pokemon.PokedexNumber), PokedexSortDirection));
-            if (PokedexSortDirection == ListSortDirection.Ascending)
-            {
-                PokedexSortDirection = ListSortDirection.Descending;
-            }
-            else
-            {
-                PokedexSortDirection = ListSortDirection.Ascending;
-            }
-        }
+		public string PokemonSearchText
+		{
+			get
+			{
+				return _pokemonSearchText;
+			}
+			set
+			{
+				_pokemonSearchText = value;
+				NotifyPropertyChanged(nameof(PokemonSearchText));
+			}
+		}
+		private string _pokemonSearchText;
 
-        public ListSortDirection NameSortDirection { get; set; } = ListSortDirection.Ascending;
+		public ObservableCollection<Pokemon> Pokemon
+		{
+			get { return _pokemon; }
+			set
+			{
+				if (_pokemon != value)
+				{
+					_pokemon = value;
+					NotifyPropertyChanged();
+				}
+			}
+		}
+		private ObservableCollection<Pokemon> _pokemon;
 
-        public ListSortDirection PokedexSortDirection { get; set; } = ListSortDirection.Ascending;
+		private void OnSelectionChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			if (_pokemonListBoxItems == null)
+			{
+				// Probably just haven't painted/initialized the ListBox yet.
+				return;
+			}
 
-        public bool IsTypeTwoEnabled => !MonotypesOnly;
+			_pokemonListBoxItems.Filter = (o) =>
+			{
+				if (o is not Pokemon pokemon)
+				{
+					return false;
+				}
 
-        public RelayCommand AlphabeticalSort { get; }
+				if (!string.IsNullOrEmpty(PokemonSearchText))
+				{
+					if (!pokemon.Name.Contains(PokemonSearchText, StringComparison.InvariantCultureIgnoreCase))
+					{
+						return false;
+					}
+				}
 
-        public RelayCommand PokedexNumberSort { get; }
+				return PokemonFilterVM.PassesFilter(pokemon);
+			};
+		}
 
-        public IEnumerable<string> Types => PokeTypeUtilities.GetTypes();
+		private void AlphabeticalSortCommand()
+		{
+			_pokemonListBoxItems.SortDescriptions.Clear();
+			_pokemonListBoxItems.SortDescriptions.Add(new SortDescription(nameof(WpfLibrary1.Pokemon.Name), NameSortDirection));
+			if (NameSortDirection == ListSortDirection.Ascending)
+			{
+				NameSortDirection = ListSortDirection.Descending;
+			}
+			else
+			{
+				NameSortDirection = ListSortDirection.Ascending;
+			}
+		}
 
-        public string PokemonSearchText
-        {
-            get
-            {
-                return _pokemonSearchText;
-            }
-            set
-            {
-                _pokemonSearchText = value;
-                NotifyPropertyChanged(nameof(PokemonSearchText));
-            }
-        }
-        private string _pokemonSearchText;
-
-        public bool MonotypesOnly
-        {
-            get
-            {
-                return _monotypesOnly;
-            }
-            set
-            {
-                _monotypesOnly = value;
-                NotifyPropertyChanged(nameof(MonotypesOnly));
-            }
-        }
-        private bool _monotypesOnly;
-
-        public Types SelectedTypeOne
-        {
-            get
-            {
-                return _selectedTypeOne;
-            }
-            set
-            {
-                _selectedTypeOne = value;
-                NotifyPropertyChanged(nameof(SelectedTypeOne));
-            }
-        }
-        private Types _selectedTypeOne = WpfLibrary1.Types.None;
-
-        public Types SelectedTypeTwo
-        {
-            get
-            {
-                return _selectedTypeTwo;
-            }
-            set
-            {
-                _selectedTypeTwo = value;
-                NotifyPropertyChanged(nameof(SelectedTypeTwo));
-            }
-        }
-        private Types _selectedTypeTwo = WpfLibrary1.Types.None;
-
-        public ObservableCollection<Pokemon> Pokemon
-        {
-            get { return _pokemon; }
-            set
-            {
-                if (_pokemon != value)
-                {
-                    _pokemon = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-        private ObservableCollection<Pokemon> _pokemon;
-    }
+		private void PokedexNumberSortCommand()
+		{
+			_pokemonListBoxItems.SortDescriptions.Clear();
+			_pokemonListBoxItems.SortDescriptions.Add(new SortDescription(nameof(WpfLibrary1.Pokemon.PokedexNumber), PokedexSortDirection));
+			if (PokedexSortDirection == ListSortDirection.Ascending)
+			{
+				PokedexSortDirection = ListSortDirection.Descending;
+			}
+			else
+			{
+				PokedexSortDirection = ListSortDirection.Ascending;
+			}
+		}
+	}
 }
 
 // MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

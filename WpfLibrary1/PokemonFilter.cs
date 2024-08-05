@@ -1,76 +1,61 @@
 ﻿namespace WpfLibrary1
 {
-    public abstract class PokemonFilter
-    {
-        public PokemonFilter()
-        {
-        }
+	public class PokemonFilter : IPokemonFilter
+	{
+		private readonly TypeFilter _typeFilter = new();
 
-        public virtual bool PassesFilter(Pokemon pokemon)
-        {
-            return true;
-        }
-    }
+		public PokemonFilter()
+		{
+			PokemonFilterChanged += OnPokemonFilterChanged;
+		}
 
-    public static class PokemonFilterBuilder
-    {
-        public static PokemonFilter BuildTypeFilter(Types typeOne, Types typeTwo, bool isMonoType = false)
-        {
-            return new TypeFilter()
-                .WithTypes(typeOne, typeTwo)
-                .MonotypesOnly(isMonoType);
-        }
-    }
+		public event EventHandler<PokemonFilterEventArgs>? PokemonFilterChanged;
 
-    public class TypeFilter : PokemonFilter
-    {
-        public Types[]? TypesToFilter { get; set; }
+		public void OnPokemonFilterChanged(object? sender, PokemonFilterEventArgs e)
+		{
+			_typeFilter.TypesToFilter = e.Types;
+			_typeFilter.IsMonotype = e.IsMonoType;
+		}
 
-        public override bool PassesFilter(Pokemon pokemon)
-        {
-            try
-            {
-                if (TypesToFilter is null || TypesToFilter.Length == 0)
-                {
-                    return true;
-                }
+		public bool PassesFilter(Pokemon pokemon)
+		{
+			return _typeFilter.PassesFilter(pokemon);
+		}
 
-                if (TypesToFilter[0] == Types.None && TypesToFilter[1] == Types.None && !IsMonotype)
-                {
-                    return true;
-                }
+		private class TypeFilter
+		{
+			public Types[]? TypesToFilter { get; set; }
 
-                if (TypesToFilter[1] == Types.None || IsMonotype)
-                {
-                    return pokemon.IsOfType(TypesToFilter[0], IsMonotype);
-                }
+			public bool PassesFilter(Pokemon pokemon)
+			{
+				try
+				{
+					if (TypesToFilter is null || TypesToFilter.Length == 0)
+					{
+						return true;
+					}
 
-                var result = pokemon.IsOfType(TypesToFilter[0]) && pokemon.IsOfType(TypesToFilter[1]);
-                return result;
-            }
-            catch (ArgumentOutOfRangeException exception)
-            {
-                Console.WriteLine(exception);
-                return true;
-            }
-        }
+					if (TypesToFilter[0] == Types.None && TypesToFilter[1] == Types.None && !IsMonotype)
+					{
+						return true;
+					}
 
-        public bool IsMonotype { get; set; }
-    }
-    
-    public static class TypeFilterExtensions
-    {
-        public static TypeFilter WithTypes(this TypeFilter filter, params Types[] types)
-        {
-            filter.TypesToFilter = new Types[types.Length];
-            types.CopyTo(filter.TypesToFilter, 0);
-            return filter;
-        }
+					if (TypesToFilter[1] == Types.None || IsMonotype)
+					{
+						return pokemon.IsOfType(TypesToFilter[0], IsMonotype);
+					}
 
-        public static TypeFilter MonotypesOnly(this TypeFilter filter, bool monotypesOnly)
-        {
-            filter.IsMonotype = monotypesOnly;
-            return filter;
-        }
-    }
+					var result = pokemon.IsOfType(TypesToFilter[0]) && pokemon.IsOfType(TypesToFilter[1]);
+					return result;
+				}
+				catch (ArgumentOutOfRangeException exception)
+				{
+					Console.WriteLine(exception);
+					return true;
+				}
+			}
+
+			public bool IsMonotype { get; set; }
+		}
+	}
 }
